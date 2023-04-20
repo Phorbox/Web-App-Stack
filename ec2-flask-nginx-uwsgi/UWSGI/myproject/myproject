@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    server_name ec2-34-205-76-178.compute-1.amazonaws.com;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass http://unix:/home/ubuntu/myproject/myproject.sock;
+    }
+}

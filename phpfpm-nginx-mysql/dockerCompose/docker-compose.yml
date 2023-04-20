@@ -1,0 +1,44 @@
+version: "2"
+services:
+  nginx:
+    build: ./nginxImage/
+    container_name: nginx-container
+    ports:
+      - 80:80
+    links:
+      - php
+    volumes:
+      - ./src:/var/www/html/
+
+  php:
+    build: ./backendImage/
+    container_name: php-container
+    expose:
+      - 9000
+    volumes:
+      - ./src:/var/www/html/
+
+  db:
+    build: ./mysqlImage/
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_DATABASE: "rowdytable"
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: "webuser"
+      # You can use whatever password you like
+      MYSQL_PASSWORD: "O)v]wtZTgidCLa*Z"
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: "password"
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - "3306:3306"
+    expose:
+      # Opens port 3306 on the container
+      - "3306"
+      # Where our data will be persisted
+    volumes:
+      - my-db:/var/lib/mysql
+
+volumes:
+  my-db:

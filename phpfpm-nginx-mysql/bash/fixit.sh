@@ -2,7 +2,7 @@
 # bash makit.sh "newDns"
 
 echo "In sed"
-oldDNS = (head -n 1 ./configs/creds.txt)
+oldDNS = head -n 1 ./configs/oldcreds.txt
 sed -i "s/$oldDNS/${1}/g" /etc/nginx/sites-available/default
 sed -i "s/$oldDNS/${1}/g" ./configs/cert_ext.cnf
 
